@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import Link from "next/link";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Leaf, Recycle, Sprout, Shirt, Coffee, Package } from "lucide-react";
 import { useTilt } from "@/lib/use-tilt";
 
@@ -9,16 +10,16 @@ type Card = {
   icon: React.ReactNode;
   title: string;
   desc: string;
-  tone: string;
+  href: string;
 };
 
 const cards: Card[] = [
-  { icon: <Recycle size={28} />, title: "폐자원 재발견", desc: "버려진 자원에 새 가치를 부여합니다.", tone: "from-[#1c4044] to-[#2a5a4a]" },
-  { icon: <Shirt size={28} />, title: "패션 업사이클", desc: "런웨이에 오른 업사이클링 의류.", tone: "from-[#3a5a3a] to-[var(--accent)]" },
-  { icon: <Coffee size={28} />, title: "푸드 업사이클", desc: "버려질 식재료로 만드는 새로운 맛.", tone: "from-[#6a6558] to-[#a08c6a]" },
-  { icon: <Sprout size={28} />, title: "도시 화분", desc: "플라스틱이 화분으로 다시 태어납니다.", tone: "from-[#2a5a4a] to-[var(--accent)]" },
-  { icon: <Package size={28} />, title: "패키지 순환", desc: "포장재를 줄이고 재사용 합니다.", tone: "from-[#1c4044] to-[#3a5a3a]" },
-  { icon: <Leaf size={28} />, title: "그린 캠페인", desc: "함께 참여하고, 직접 개최하세요.", tone: "from-[#3a5a3a] to-[#1c4044]" },
+  { icon: <Recycle size={28} />, title: "폐자원 재발견", desc: "버려진 자원에 새 가치를 부여합니다.", href: "/search?q=재활용" },
+  { icon: <Shirt size={28} />, title: "패션 업사이클", desc: "런웨이에 오른 업사이클링 의류.", href: "/search?q=패션" },
+  { icon: <Coffee size={28} />, title: "푸드 업사이클", desc: "버려질 식재료로 만드는 새로운 맛.", href: "/search?q=푸드" },
+  { icon: <Sprout size={28} />, title: "도시 화분", desc: "플라스틱이 화분으로 다시 태어납니다.", href: "/search?q=화분" },
+  { icon: <Package size={28} />, title: "패키지 순환", desc: "포장재를 줄이고 재사용 합니다.", href: "/search?q=패키지" },
+  { icon: <Leaf size={28} />, title: "그린 캠페인", desc: "함께 참여하고, 직접 개최하세요.", href: "/campaigns" },
 ];
 
 function TiltCard({ card }: { card: Card }) {
@@ -35,7 +36,7 @@ function TiltCard({ card }: { card: Card }) {
   });
 
   return (
-    <div style={{ perspective: 1000 }}>
+    <Link href={card.href} className="block" style={{ perspective: 1000 }}>
       <motion.div
         ref={ref}
         onMouseMove={onMouseMove}
@@ -45,8 +46,9 @@ function TiltCard({ card }: { card: Card }) {
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
+          background: "linear-gradient(135deg, var(--surface-deep), var(--surface-dark))",
         }}
-        className={`relative h-[280px] rounded-3xl bg-gradient-to-br ${card.tone} p-7 text-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] overflow-hidden cursor-pointer`}
+        className="relative h-[280px] rounded-3xl p-7 text-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] overflow-hidden"
       >
         <motion.div
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -68,32 +70,38 @@ function TiltCard({ card }: { card: Card }) {
           →
         </div>
       </motion.div>
-    </div>
+    </Link>
   );
 }
 
 export function TiltCardGrid() {
   const ref = useRef<HTMLDivElement>(null);
+  // JS 주도 스크롤 패럴랙스는 전역 CSS reduce 로 멈추지 않는다 — 직접 분기한다.
+  const reduce = useReducedMotion();
   const { scrollY } = useScroll();
-  const headerY = useTransform(scrollY, [400, 1600], ["80px", "-80px"]);
-  const gridY = useTransform(scrollY, [400, 1600], ["40px", "-40px"]);
+  const headerYRaw = useTransform(scrollY, [400, 1600], ["80px", "-80px"]);
+  const gridYRaw = useTransform(scrollY, [400, 1600], ["40px", "-40px"]);
+  const headerY = reduce ? "0px" : headerYRaw;
+  const gridY = reduce ? "0px" : gridYRaw;
 
   return (
     <section
       ref={ref}
       className="relative py-32 px-8 transition-colors"
-      style={{ position: "relative", background: "#ffffff" }}
+      style={{ position: "relative", background: "var(--card)" }}
     >
       <div className="max-w-6xl mx-auto">
         <motion.div className="mb-16 text-center" style={{ y: headerY }}>
-          <p className="text-[#6a6558] tracking-[0.4em] uppercase mb-4">Upcycling Stories</p>
+          <p className="tracking-[0.4em] uppercase mb-4" style={{ color: "var(--accent-secondary)" }}>
+            Upcycling Stories
+          </p>
           <h2
-            style={{ fontFamily: "var(--font-black-han), sans-serif", fontSize: "clamp(40px, 5vw, 72px)", color: "#1c4044" }}
+            style={{ fontFamily: "var(--font-black-han), sans-serif", fontSize: "clamp(40px, 5vw, 72px)", color: "var(--heading)" }}
           >
             다시, 다 — 새 가치를 더하다
           </h2>
-          <p className="mt-6 text-[#6a6558] max-w-2xl mx-auto">
-            카드 위에 마우스를 올리면 3D로 기울어집니다.
+          <p className="mt-6 max-w-2xl mx-auto" style={{ color: "rgba(var(--ink-rgb), 0.68)" }}>
+            관심 있는 주제를 골라 관련 이야기와 캠페인을 찾아보세요.
           </p>
         </motion.div>
         <motion.div

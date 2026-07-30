@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-31T04:40:00+09:00",
+  "title": "Design System: 다시,다 (Dasida)",
+  "extensions": {
+    "colorMeta": {
+      "deep-teal-ink": { "role": "primary", "displayName": "딥틸 잉크", "canonical": "#1c4044", "tonalRamp": ["#0a1719", "#122b2e", "#1c4044", "#2d5c60", "#457d81", "#6ba0a3", "#9cc2c4", "#d2e4e5"] },
+      "night-teal": { "role": "neutral", "displayName": "나이트틸", "canonical": "#0f1f22", "tonalRamp": ["#060d0e", "#0f1f22", "#1a3438", "#2a4e52", "#406d70", "#619093", "#92b6b8", "#cbdedf"] },
+      "mint": { "role": "primary", "displayName": "민트", "canonical": "#7dd3a3", "tonalRamp": ["#12442a", "#1d6540", "#2c8a58", "#43ac73", "#5fc28b", "#7dd3a3", "#a6e3c0", "#d4f2e0"] },
+      "teal-strong": { "role": "primary", "displayName": "틸 스트롱", "canonical": "#0f7076", "tonalRamp": ["#062e30", "#0a4a4e", "#0f7076", "#148a90", "#2fa9ae", "#5cc2c6", "#93d9db", "#cceeef"] },
+      "cream": { "role": "neutral", "displayName": "크림", "canonical": "#f9f7f2", "tonalRamp": ["#4a463c", "#6e6959", "#938c78", "#b5ad99", "#d2cbba", "#e7e2d4", "#f2efe6", "#f9f7f2"] },
+      "sand": { "role": "neutral", "displayName": "샌드", "canonical": "#e7dfcb", "tonalRamp": ["#453e2d", "#665c43", "#887b5a", "#a99a74", "#c3b694", "#d6ccb1", "#e7dfcb", "#f3efe3"] },
+      "card-white": { "role": "neutral", "displayName": "카드 화이트", "canonical": "#ffffff", "tonalRamp": ["#4d4d4d", "#6b6b6b", "#8a8a8a", "#a8a8a8", "#c6c6c6", "#dedede", "#f0f0f0", "#ffffff"] },
+      "danger-solid": { "role": "danger", "displayName": "위험 솔리드", "canonical": "#ed5c48", "tonalRamp": ["#4d130b", "#7a2115", "#a53120", "#cc452f", "#ed5c48", "#f28270", "#f7ab9e", "#fbd4cd"] },
+      "warning-ink": { "role": "warning", "displayName": "경고 잉크", "canonical": "#95670f", "tonalRamp": ["#3a2808", "#5c400e", "#95670f", "#b07b1e", "#cf9a35", "#ddb463", "#eacf94", "#f5e7c8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Black Han Sans — 랜딩 히어로·섹션 타이틀 전용. var(--font-black-han) 로만 참조." },
+      "headline": { "displayName": "Headline", "purpose": "페이지 제목·카드 그룹 제목 20–30px(1.25–1.875rem), 600–700 웨이트." },
+      "body": { "displayName": "Body", "purpose": "시스템 산세리프 14px, line-height 1.6, 최대 행길이 65–75ch." },
+      "label": { "displayName": "Label", "purpose": "칩·배지·메타·버튼 텍스트 12–13px, 500 웨이트." }
+    },
+    "gradientStops": {
+      "note": "globals.css 승인 브랜드 그라디언트(--hero-gradient/--hero-title-gradient/--auth-gradient/다크 변형)의 중간 스톱. 팔레트 외 단독 사용 금지, 그라디언트 정의 안에서만 유효.",
+      "values": ["#cfe6d3", "#3a7a5a", "#2a5a4a", "#d8e8c3"]
+    },
+    "shadows": [
+      { "name": "hover-lift", "value": "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)", "purpose": "인터랙티브 카드·버튼 호버 부양(-translate-y-0.5 동반)." },
+      { "name": "deep-soft", "value": "0 20px 45px -25px rgba(0,0,0,0.45)", "purpose": "히어로 비주얼·모달 등 지면에서 분리된 최상위 면 전용." }
+    ],
+    "motion": [
+      { "name": "state-transition", "value": "150ms ease", "purpose": "경계선·그림자·배경색 상태 전환 기본값(.ui-control)." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "민트 배경 + 나이트틸 텍스트의 주요 CTA. 호버 시 부양.",
+      "html": "<button class=\"ds-btn-primary\">캠페인 둘러보기</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--accent, #7dd3a3); color: var(--surface-dark, #0f1f22); padding: 12px 24px; font-size: 13px; font-weight: 500; border: none; border-radius: 12px; cursor: pointer; transition: box-shadow 150ms ease, transform 150ms ease; } .ds-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #7dd3a3); outline-offset: 3px; } .ds-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "파괴적 액션 전용. 테마 불변 솔리드 배경 + 흰 텍스트.",
+      "html": "<button class=\"ds-btn-danger\">삭제</button>",
+      "css": ".ds-btn-danger { display: inline-flex; align-items: center; justify-content: center; background: var(--danger-solid, #ed5c48); color: #ffffff; padding: 12px 24px; font-size: 13px; font-weight: 500; border: none; border-radius: 12px; cursor: pointer; transition: background-color 150ms ease; } .ds-btn-danger:hover { background: var(--danger-solid-strong, #d94e3c); } .ds-btn-danger:focus-visible { outline: 2px solid var(--accent, #7dd3a3); outline-offset: 3px; }"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "완전 원형 글래스 칩 — 태그·필터·메타 정보.",
+      "html": "<span class=\"ds-chip\">업사이클링</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 4px; border-radius: 9999px; border: 1px solid rgba(var(--ink-rgb, 28, 64, 68), 0.12); background: var(--glass-strong, rgba(255,255,255,0.9)); color: var(--heading, #1c4044); padding: 6px 12px; font-size: 12px; transition: background-color 150ms ease; } .ds-chip:hover { background: var(--chip-bg, rgba(28,64,68,0.06)); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "평면 우선 카드 — 1px 경계선, 정지 시 그림자 없음.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">유리병이 화분이 되기까지</h3><p class=\"ds-card-body\">버려진 유리병을 다듬어 작은 화분으로 만들었습니다.</p></div>",
+      "css": ".ds-card { background: var(--card, #ffffff); border: 1px solid var(--border, rgba(28,64,68,0.08)); border-radius: 16px; padding: 20px; transition: box-shadow 150ms ease, transform 150ms ease; } .ds-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); } .ds-card-title { color: var(--heading, #1c4044); font-size: 16px; font-weight: 600; margin: 0 0 6px; } .ds-card-body { color: var(--foreground-muted, rgba(28,64,68,0.65)); font-size: 14px; line-height: 1.6; margin: 0; }"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": ".ui-control — 포커스 시 민트 경계선 + 18% 알파 글로우 링.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"캠페인 검색\" />",
+      "css": ".ds-input { width: 100%; border: 1px solid var(--border, rgba(28,64,68,0.08)); border-radius: 12px; padding: 12px 16px; font-size: 14px; background: var(--card, #ffffff); color: var(--foreground, #0f1f22); outline: none; transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-input::placeholder { color: var(--foreground-muted, rgba(28,64,68,0.65)); } .ds-input:focus-visible { border-color: var(--accent, #7dd3a3); box-shadow: 0 0 0 3px rgb(125 211 163 / 18%); } .ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Glass Nav Bar",
+      "kind": "nav",
+      "description": "반투명 지면 + 백드롭 블러의 상단 글래스 바.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-brand\">다시,다</span><a class=\"ds-nav-link ds-nav-link-active\" href=\"#\">캠페인</a><a class=\"ds-nav-link\" href=\"#\">피드</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 20px; padding: 12px 20px; background: rgba(var(--surface-rgb, 249, 247, 242), 0.75); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border, rgba(28,64,68,0.08)); } .ds-nav-brand { font-weight: 700; color: var(--heading, #1c4044); font-size: 15px; } .ds-nav-link { color: var(--foreground-muted, rgba(28,64,68,0.65)); font-size: 13px; text-decoration: none; transition: color 150ms ease; } .ds-nav-link:hover { color: var(--heading, #1c4044); } .ds-nav-link-active { color: var(--accent-secondary, #1c4044); font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "정서의 식물원",
+    "overview": "유리 온실 안의 정적이고 정돈된 녹지. 깊은 틸의 그늘과 민트의 생기가 크림빛 지면 위에 놓이고, 반투명 유리 패널이 그 사이를 가른다. 미니멀·절제·전문적 — 장식을 더하지 않고 타이포그래피와 여백, 정렬로 말한다. 따뜻함은 색을 덧칠해서가 아니라 콘텐츠와 담백한 말투가 낸다.",
+    "keyCharacteristics": [
+      "딥틸+민트+크림의 단일 색 가족 — 외부 색을 들이지 않는다",
+      "글래스 면과 1px 경계선으로 구분하는 평면 우선의 깊이",
+      "완전 원형 칩과 16–24px 라운딩의 부드러운 형태 언어",
+      "배경의 은은한 민트 블러 오브(opacity 20%)가 유일한 장식",
+      "모든 상태(빈 목록·로딩·오류)까지 디자인된 완결성"
+    ],
+    "rules": [
+      { "name": "토큰 단일 통로 규칙", "body": "모든 색은 globals.css의 CSS 토큰을 통해서만 쓴다. dark ? 삼항, Tailwind dark: 변형, 리터럴 hex의 컴포넌트 직접 사용 금지.", "section": "colors" },
+      { "name": "민트 절제 규칙", "body": "민트는 화면의 10% 이하. CTA·포커스·활성 표시가 아닌 곳에 민트를 칠하기 시작하면 온실이 놀이공원이 된다.", "section": "colors" },
+      { "name": "한 목소리 규칙", "body": "Black Han Sans는 브랜드가 말할 때(히어로·섹션 헤딩)만 쓴다. UI 크롬·본문·버튼에 스며들면 무게가 사라진다.", "section": "typography" },
+      { "name": "응답으로서의 그림자 규칙", "body": "정지 상태 컴포넌트에 그림자를 기본 적용하지 않는다. 그림자가 보이면 사용자가 방금 무언가를 했거나 그 면이 페이지 위에 떠 있는 것이다.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do 모든 색을 globals.css 토큰으로만 참조한다 — 새 색이 필요하면 토큰을 먼저 추가한다.",
+      "Do 본문 대비 4.5:1을 지킨다. 크림 지면 위 뮤트 텍스트는 --foreground-muted(잉크 75% 알파)가 하한선이다.",
+      "Do 모든 변형·전환에 prefers-reduced-motion 대응을 넣는다.",
+      "Do 민트 배경 위 텍스트는 항상 나이트틸(#0f1f22)로 — 흰 텍스트는 대비 미달이다.",
+      "Do 빈 목록·로딩·오류 상태를 본 화면과 같은 정성으로 디자인한다."
+    ],
+    "donts": [
+      "Don't dark ? 색 삼항, useTheme 색 분기, Tailwind dark: 변형을 쓰지 않는다.",
+      "Don't 그라데이션 텍스트·통계 히어로 카드·보라 그라데이션 등 전형적 SaaS/AI 랜딩 문법을 들이지 않는다.",
+      "Don't 관공서 환경 캠페인 톤(초록 일색 + 지구 아이콘 + 구호 나열)으로 번역하지 않는다.",
+      "Don't 유치한 카툰풍·차가운 기업 웹 어느 쪽으로도 기울지 않는다.",
+      "Don't 카드에 2px 이상 색 스트라이프를 긋거나 정지 상태 컴포넌트에 그림자를 기본 적용하지 않는다.",
+      "Don't Black Han Sans를 본문·버튼·UI 크롬에 쓰지 않는다. 배경 오브를 페이지당 둘 이상 두지 않는다."
+    ]
+  }
+}

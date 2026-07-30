@@ -127,28 +127,21 @@ export function Carousel3D() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--surface-dark-rgb),0.9)] via-[rgba(var(--surface-dark-rgb),0.4)] to-transparent" />
                   <div className="absolute inset-0 p-6 flex flex-col justify-between text-white">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] tracking-[0.3em] px-2 py-1 rounded bg-white/20 backdrop-blur">
+                      <span className="text-[12px] tracking-[0.3em] px-2 py-1 rounded bg-white/20 backdrop-blur">
                         {it.tag}
                       </span>
-                      <span className="text-[10px] opacity-60">0{i + 1}</span>
+                      <span className="text-[12px] opacity-60">0{i + 1}</span>
                     </div>
                     <div>
-                      <div className="w-10 h-10 rounded-full bg-[var(--accent)] text-[var(--surface-dark)] flex items-center justify-center mb-4">
-                        ◐
-                      </div>
                       <h3
                         style={{
                           fontFamily: "var(--font-black-han), sans-serif",
-                          fontSize: small ? 15 : 20,
+                          fontSize: small ? 14 : 20,
                           lineHeight: 1.3,
                         }}
                       >
                         {it.title}
                       </h3>
-                      <div className="flex items-center justify-between text-[11px] opacity-70 mt-3">
-                        <span>2026 · UPCYCLE</span>
-                        <span>→</span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -161,7 +154,7 @@ export function Carousel3D() {
       <div className="text-center mt-16 px-8">
         <p
           className="max-w-xl mx-auto leading-relaxed"
-          style={{ color: "rgba(var(--ink-rgb), 0.53)" }}
+          style={{ color: "rgba(var(--ink-rgb), 0.75)" }}
         >
           폐자원이 자산이라는 인식이 확산됨에 따라, 단순한 재활용과 달리 새로운 가치를 불어넣는 산업이
           주목받고 있습니다.

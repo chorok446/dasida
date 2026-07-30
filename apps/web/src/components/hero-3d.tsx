@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import Link from "next/link";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useTilt } from "@/lib/use-tilt";
 
 export function Hero3D() {
@@ -12,11 +13,17 @@ export function Hero3D() {
     rotateXRange: [14, -14],
   });
 
+  // JS 주도 스크롤 패럴랙스는 전역 CSS reduce 로 멈추지 않는다 — 직접 분기한다.
+  const reduce = useReducedMotion();
   const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 800], ["0%", "40%"]);
-  const titleY = useTransform(scrollY, [0, 800], ["0%", "-30%"]);
-  const titleOpacity = useTransform(scrollY, [0, 600], [1, 0]);
-  const blobY = useTransform(scrollY, [0, 800], ["0%", "60%"]);
+  const bgYRaw = useTransform(scrollY, [0, 800], ["0%", "40%"]);
+  const titleYRaw = useTransform(scrollY, [0, 800], ["0%", "-30%"]);
+  const titleOpacityRaw = useTransform(scrollY, [0, 600], [1, 0]);
+  const blobYRaw = useTransform(scrollY, [0, 800], ["0%", "60%"]);
+  const bgY = reduce ? "0%" : bgYRaw;
+  const titleY = reduce ? "0%" : titleYRaw;
+  const titleOpacity = reduce ? 1 : titleOpacityRaw;
+  const blobY = reduce ? "0%" : blobYRaw;
 
   const [hover, setHover] = useState(false);
 
@@ -129,19 +136,33 @@ export function Hero3D() {
           className="absolute -left-16 -bottom-10 w-24 h-24 rounded-full border-4 backdrop-blur-md"
         />
 
-        <motion.p
-          style={{
-            transform: "translateZ(60px)",
-            color: "rgba(var(--ink-rgb), 0.75)",
-          }}
-          className="hidden sm:block text-center mt-4 max-w-xl mx-auto"
+        <motion.div
+          style={{ transform: "translateZ(60px)" }}
+          className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 px-10"
         >
-          마우스를 움직여 보세요 — 레이어들이 3D 공간에서 따라옵니다.
-        </motion.p>
+          <Link
+            href="/campaigns"
+            className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[14px] font-medium transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 motion-reduce:transform-none"
+            style={{ background: "var(--accent)", color: "var(--surface-dark)" }}
+          >
+            캠페인 둘러보기
+          </Link>
+          <Link
+            href="/signup"
+            className="inline-flex items-center justify-center rounded-full border px-8 py-4 text-[14px] font-medium transition-colors hover:bg-[color:var(--chip-bg)]"
+            style={{
+              borderColor: "rgba(var(--ink-rgb), 0.4)",
+              color: "var(--heading)",
+              background: "rgba(var(--surface-rgb), 0.6)",
+            }}
+          >
+            회원가입
+          </Link>
+        </motion.div>
       </motion.div>
 
       <motion.div
-        animate={{ y: hover ? 6 : 0, opacity: hover ? 0.4 : 1 }}
+        animate={reduce ? undefined : { y: hover ? 6 : 0, opacity: hover ? 0.4 : 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 tracking-[0.4em] uppercase"
         style={{ color: "rgba(var(--ink-rgb), 0.65)" }}
       >

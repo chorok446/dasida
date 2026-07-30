@@ -62,6 +62,7 @@ export function LandingFlow() {
                 }}
               >
                 <span
+                  aria-hidden
                   className="absolute top-6 right-7 text-[12px] tracking-[0.3em]"
                   style={{ color: "rgba(var(--ink-rgb), 0.4)" }}
                 >
@@ -106,23 +107,23 @@ export function LandingFlow() {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.div whileHover={reduce ? undefined : { y: -3 }} whileTap={{ scale: 0.97 }}>
               <Link
-                href="/feed"
-                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[15px] font-medium shadow-[0_16px_40px_-16px_rgba(var(--accent-rgb),0.8)]"
+                href="/campaigns"
+                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[14px] font-medium shadow-[0_16px_40px_-16px_rgba(var(--accent-rgb),0.8)]"
                 style={{ background: "var(--accent)", color: "var(--surface-dark)" }}
               >
-                피드 둘러보기
+                캠페인 둘러보기
               </Link>
             </motion.div>
             <motion.div whileHover={reduce ? undefined : { y: -3 }} whileTap={{ scale: 0.97 }}>
               <Link
-                href="/campaigns"
-                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[15px] font-medium border"
+                href="/signup"
+                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[14px] font-medium border"
                 style={{
                   borderColor: "rgba(var(--ink-rgb), 0.4)",
                   color: "var(--heading)",
                 }}
               >
-                캠페인 참여하기
+                회원가입
               </Link>
             </motion.div>
           </div>
