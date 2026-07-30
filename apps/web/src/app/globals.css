@@ -11,7 +11,7 @@
   /* 액센트 틴트 배경(태그 pill 등). */
   --accent-soft: rgba(125, 211, 163, 0.2);
   --foreground: #0f1f22;
-  --foreground-muted: rgba(28, 64, 68, 0.65);
+  --foreground-muted: rgba(28, 64, 68, 0.75);
   --border: rgba(28, 64, 68, 0.08);
   --card: #ffffff;
   --chip-bg: rgba(28, 64, 68, 0.06);
@@ -39,7 +39,7 @@
   --glass: rgba(255, 255, 255, 0.75);
   --glass-strong: rgba(255, 255, 255, 0.9);
   /* 액센트 틴트 배경 위 텍스트용 진한 액센트. */
-  --accent-strong: #148a90;
+  --accent-strong: #0f7076;
   /* 제목·강조 잉크. 라이트는 딥틸, 다크는 크림(--foreground 보다 딥틸 쪽이 진한 헤딩용). */
   --heading: #1c4044;
   /* 불투명 패널(카드보다 진한 면 — 모달·팝오버 등). */
@@ -53,7 +53,7 @@
   --danger-solid: #ed5c48;
   --danger-solid-strong: #d94e3c;
   /* 경고·대기 상태 텍스트/틴트 배경(신고 PENDING 배지 등). */
-  --warning: #b07b1e;
+  --warning: #95670f;
   --warning-soft: rgba(237, 178, 72, 0.18);
 }
 
