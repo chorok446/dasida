@@ -43,6 +43,18 @@ class MediaUploadControllerTest(
         return out.toByteArray()
     }
 
+    /** IHDR 치수만 조작한 픽셀 폭탄 PNG — 파일은 작지만 헤더 해상도는 초대형. CRC 는 재계산해 유효하게 유지한다. */
+    private fun pngBytesWithFakeDims(width: Int, height: Int): ByteArray {
+        val bytes = realPngBytes(4, 4)
+        val buf = java.nio.ByteBuffer.wrap(bytes)
+        buf.putInt(16, width)
+        buf.putInt(20, height)
+        val crc = java.util.zip.CRC32()
+        crc.update(bytes, 12, 17) // IHDR chunk type(4) + data(13)
+        buf.putInt(29, crc.value.toInt())
+        return bytes
+    }
+
     private fun uploadedFile(url: String): java.nio.file.Path =
         java.nio.file.Paths.get(uploadDir).resolve(java.nio.file.Paths.get(URI(url).path).fileName.toString())
 
@@ -130,6 +142,16 @@ class MediaUploadControllerTest(
         val url = objectMapper.readValue(upload.response.contentAsString, MediaUploadResponse::class.java).url
         assertThat(uploadedFile(url)).exists()
         assertThat(uploadedFile(url.removeSuffix(".png") + MediaUploadService.THUMB_SUFFIX)).doesNotExist()
+    }
+
+    @Test
+    fun `헤더 해상도가 초대형인 이미지는 디코딩 없이 400`() {
+        val user = users.saveAndFlush(User(email = "pixel-bomb@dasida.com", passwordHash = "h", name = "업로더"))
+        mvc.perform(
+            multipart("/api/media")
+                .file(MockMultipartFile("file", "bomb.png", "image/png", pngBytesWithFakeDims(100_000, 100_000)))
+                .cookie(authCookie(user)),
+        ).andExpect(status().isBadRequest)
     }
 
     @Test

@@ -42,6 +42,13 @@ class MediaUploadService(
         val extension = detectImageExtension(bytes)
             ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "unsupported image type")
 
+        // 전체 디코딩 전에 헤더 치수만 확인 — 작은 파일에 초대형 해상도를 담은 픽셀 폭탄이
+        // ImageIO.read 에서 힙을 소진하는 것을 막는다. 치수 판독 불가면 기존 손상-파일 경로를 따른다.
+        val headerPixels = if (extension == "webp") null else headerPixelCountOrNull(bytes)
+        if (headerPixels != null && headerPixels > MAX_IMAGE_PIXELS) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "image dimensions are too large")
+        }
+
         val id = UUID.randomUUID().toString()
         val dir = resolveUploadDir()
 
@@ -61,6 +68,21 @@ class MediaUploadService(
 
     private fun decodeOrNull(bytes: ByteArray): BufferedImage? =
         runCatching { ImageIO.read(ByteArrayInputStream(bytes)) }.getOrNull()
+
+    /** 헤더에서 픽셀 수만 읽는다(전체 디코딩 없음). 판독 불가면 null. */
+    private fun headerPixelCountOrNull(bytes: ByteArray): Long? = runCatching {
+        ImageIO.createImageInputStream(ByteArrayInputStream(bytes)).use { input ->
+            val readers = ImageIO.getImageReaders(input)
+            if (!readers.hasNext()) return@use null
+            val reader = readers.next()
+            try {
+                reader.setInput(input, true, true)
+                reader.getWidth(0).toLong() * reader.getHeight(0)
+            } finally {
+                reader.dispose()
+            }
+        }
+    }.getOrNull()
 
     /** 원본이 MAX_ORIGINAL_DIM 을 넘으면 같은 포맷으로 축소 재인코딩한다. 실패 시 원본을 그대로 쓴다. */
     private fun optimizedOriginal(bytes: ByteArray, image: BufferedImage?, extension: String): ByteArray {
@@ -112,6 +134,9 @@ class MediaUploadService(
 
     companion object {
         private const val MAX_BYTES = 5 * 1024 * 1024
+
+        /** 디코딩을 허용하는 최대 픽셀 수(6000×4000 상당). 헤더 치수 기준으로 사전 차단한다. */
+        internal const val MAX_IMAGE_PIXELS = 24_000_000L
 
         /** 원본 저장 시 긴 변 상한. 이보다 크면 축소 재인코딩한다. */
         internal const val MAX_ORIGINAL_DIM = 1920
