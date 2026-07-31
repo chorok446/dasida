@@ -4,6 +4,8 @@
   --surface: #f9f7f2;
   --surface-muted: #e7dfcb;
   --surface-deep: #1c4044;
+  /* --surface-deep 위 본문 텍스트(풋터 등). 딥 면은 양 테마 모두 어두워 테마 불변. */
+  --on-deep: rgba(255, 255, 255, 0.75);
   --surface-dark: #0f1f22;
   --accent: #7dd3a3;
   /* 액센트 계열 보조 텍스트(태그·eyebrow). 라이트는 딥틸, 다크는 민트. */
