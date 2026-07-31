@@ -15,9 +15,15 @@ FROM eclipse-temurin:21-jre-jammy AS runtime
 WORKDIR /app
 
 RUN groupadd --system --gid 10001 app \
-  && useradd --system --uid 10001 --gid app --home-dir /app --shell /usr/sbin/nologin app
+  && useradd --system --uid 10001 --gid app --home-dir /app --shell /usr/sbin/nologin app \
+  && mkdir -p /data/uploads \
+  && chown app:app /data/uploads
 
 COPY --chown=app:app --from=build /workspace/build/libs/*.jar app.jar
+
+# /app 은 root 소유(비루트 app 계정은 쓰기 불가) — 업로드는 app 소유의 /data/uploads 로.
+# 재배포 시 업로드 유실을 막으려면 배포 환경에서 이 경로에 볼륨을 마운트할 것.
+ENV UPLOAD_DIR=/data/uploads
 
 USER app
 
