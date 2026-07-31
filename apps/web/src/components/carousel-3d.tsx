@@ -35,16 +35,18 @@ export function Carousel3D() {
   const step = 360 / items.length;
 
   const reduce = useReducedMotion();
+  // 호버·드래그의 일시 정지와 별개로, 키보드 사용자를 위한 명시적 정지(WCAG 2.2.2).
+  const [userPaused, setUserPaused] = useState(false);
 
   useEffect(() => {
-    if (paused || reduce) return;
+    if (paused || userPaused || reduce) return;
     const controls = animate(rotation, rotation.get() - 360, {
       duration: 40,
       ease: "linear",
       repeat: Infinity,
     });
     return () => controls.stop();
-  }, [paused, rotation, reduce]);
+  }, [paused, userPaused, rotation, reduce]);
 
   function onDrag(_: unknown, info: { delta: { x: number } }) {
     rotation.set(rotation.get() + info.delta.x * 0.4);
@@ -77,7 +79,9 @@ export function Carousel3D() {
 
       <div
         className="relative mx-auto"
-        style={{ perspective: 1600, height: small ? 330 : 460 }}
+        // rotateX(-8)+translateZ 투영으로 전면 카드가 카드 높이보다 아래로 내려온다 —
+        // 컨테이너를 투영 높이만큼 키워 하단 문단과의 겹침을 막는다.
+        style={{ perspective: 1600, height: small ? 380 : 560 }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -114,7 +118,7 @@ export function Carousel3D() {
                 >
                   <Image
                     src={it.img}
-                    alt={`${it.title} 캠페인 이미지`}
+                    alt={`${it.title} 관련 보도 이미지`}
                     fill
                     sizes="(max-width: 639px) 180px, 260px"
                     className="object-cover"
@@ -144,7 +148,19 @@ export function Carousel3D() {
         </motion.div>
       </div>
 
-      <div className="text-center mt-16 px-8">
+      <div className="text-center mt-8 px-8">
+        <button
+          type="button"
+          onClick={() => setUserPaused((v) => !v)}
+          aria-pressed={userPaused}
+          className="inline-flex items-center rounded-full border px-4 py-2 text-[13px] font-medium transition-colors hover:bg-[color:var(--chip-bg)]"
+          style={{ borderColor: "rgba(var(--ink-rgb), 0.16)", color: "var(--heading)" }}
+        >
+          {userPaused ? "자동 회전 재생" : "자동 회전 멈추기"}
+        </button>
+      </div>
+
+      <div className="text-center mt-10 px-8">
         <p
           className="max-w-xl mx-auto leading-relaxed"
           style={{ color: "rgba(var(--ink-rgb), 0.75)" }}

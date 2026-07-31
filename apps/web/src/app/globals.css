@@ -96,6 +96,12 @@ body {
   background: var(--surface-dark);
 }
 
+/* 한글 헤딩이 단어 중간에서 찢기지 않게 한다("캠페\n인" 방지). 초장문 대비 break-word 병행. */
+:where(h1, h2, h3) {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 :where(a, button, input, select, textarea, summary):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
