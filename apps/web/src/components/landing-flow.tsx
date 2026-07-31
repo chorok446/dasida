@@ -33,12 +33,6 @@ export function LandingFlow() {
     >
       <div className="max-w-6xl mx-auto">
         <ScrollReveal className="text-center mb-20">
-          <p
-            className="tracking-[0.4em] uppercase mb-4"
-            style={{ color: "var(--accent-secondary)" }}
-          >
-            How it works
-          </p>
           <h2
             style={{
               fontFamily: "var(--font-black-han), sans-serif",
@@ -64,7 +58,7 @@ export function LandingFlow() {
                 <span
                   aria-hidden
                   className="absolute top-6 right-7 text-[12px] tracking-[0.3em]"
-                  style={{ color: "rgba(var(--ink-rgb), 0.4)" }}
+                  style={{ color: "var(--foreground-muted)" }}
                 >
                   0{i + 1}
                 </span>
@@ -74,18 +68,12 @@ export function LandingFlow() {
                 >
                   {step.icon}
                 </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-black-han), sans-serif",
-                    fontSize: 26,
-                    color: "var(--heading)",
-                  }}
-                >
+                <h3 className="text-[20px] font-bold" style={{ color: "var(--heading)" }}>
                   {step.title}
                 </h3>
                 <p
                   className="mt-3 leading-relaxed"
-                  style={{ color: "rgba(var(--ink-rgb), 0.68)" }}
+                  style={{ color: "var(--foreground-muted)" }}
                 >
                   {step.desc}
                 </p>
@@ -108,7 +96,7 @@ export function LandingFlow() {
             <motion.div whileHover={reduce ? undefined : { y: -3 }} whileTap={{ scale: 0.97 }}>
               <Link
                 href="/campaigns"
-                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[14px] font-medium shadow-[0_16px_40px_-16px_rgba(var(--accent-rgb),0.8)]"
+                className="inline-flex items-center justify-center rounded-full px-8 py-4 text-[14px] font-medium transition-shadow hover:shadow-lg"
                 style={{ background: "var(--accent)", color: "var(--surface-dark)" }}
               >
                 캠페인 둘러보기
