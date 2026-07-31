@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useReducedMotion, animate } from "motion/react";
 import { fashionPhotos, marketPhotos, naturePhotos, peoplePhotos, objectPhotos, workshopPhotos } from "@/data/photos";
@@ -52,6 +52,13 @@ export function Carousel3D() {
     rotation.set(rotation.get() + info.delta.x * 0.4);
   }
 
+  // 드래그 직후 발생하는 click 이 카드 링크를 열지 않게 막는다.
+  const dragging = useRef(false);
+
+  /** 외부 기사 URL 을 지어내지 않고, 실제 보도를 검증할 수 있는 네이버 뉴스 검색으로 잇는다. */
+  const newsSearchUrl = (title: string) =>
+    `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(title)}`;
+
   return (
     <section
       className="relative py-32 overflow-hidden transition-colors"
@@ -73,7 +80,7 @@ export function Carousel3D() {
           className="mt-6 max-w-2xl mx-auto"
           style={{ color: "rgba(var(--ink-rgb), 0.75)" }}
         >
-          언론이 먼저 전한 업사이클링 소식을 모았습니다.
+          언론이 먼저 전한 업사이클링 소식 — 카드를 누르면 관련 보도로 이어집니다.
         </p>
       </div>
 
@@ -91,7 +98,16 @@ export function Carousel3D() {
           dragElastic={0.2}
           onDrag={onDrag}
           // 호버가 없는 터치 환경에서도 드래그로 자동 회전을 멈출 수 있게 한다.
-          onDragStart={() => setPaused(true)}
+          onDragStart={() => {
+            setPaused(true);
+            dragging.current = true;
+          }}
+          onDragEnd={() => {
+            // click 이벤트는 dragEnd 이후에 도착한다 — 한 틱 늦게 해제.
+            setTimeout(() => {
+              dragging.current = false;
+            }, 120);
+          }}
           className="relative w-full h-full cursor-grab active:cursor-grabbing"
           style={{ transformStyle: "preserve-3d", rotateY: rotation, rotateX: -8 }}
         >
@@ -110,15 +126,23 @@ export function Carousel3D() {
                   transformStyle: "preserve-3d",
                 }}
               >
-                <div
-                  className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] border border-white/20"
+                <a
+                  href={newsSearchUrl(it.title)}
+                  target="_blank"
+                  rel="noreferrer"
+                  draggable={false}
+                  onClickCapture={(e) => {
+                    if (dragging.current) e.preventDefault();
+                  }}
+                  aria-label={`${it.title} — 관련 보도 검색(새 탭)`}
+                  className="block relative w-full h-full rounded-2xl overflow-hidden shadow-[0_12px_28px_-12px_rgba(0,0,0,0.45)] border border-white/20 transition-shadow hover:shadow-[0_24px_48px_-16px_rgba(0,0,0,0.6)]"
                   style={{
                     background: "var(--news-card-gradient)",
                   }}
                 >
                   <Image
                     src={it.img}
-                    alt={`${it.title} 관련 보도 이미지`}
+                    alt=""
                     fill
                     sizes="(max-width: 639px) 180px, 260px"
                     className="object-cover"
@@ -141,7 +165,7 @@ export function Carousel3D() {
                       </h3>
                     </div>
                   </div>
-                </div>
+                </a>
               </div>
             );
           })}

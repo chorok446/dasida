@@ -2,24 +2,28 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { Flag, PenLine, Share2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/scroll-reveal";
 
+// 실제 3단계 시퀀스이므로 번호는 유지한다. 각 스텝은 해당 행동으로 바로 가는 링크다.
 const steps = [
   {
-    icon: <PenLine size={26} />,
     title: "기록하다",
     desc: "버려질 뻔한 것의 변신을 사진과 이야기로 남기세요.",
+    href: "/posts/new",
+    action: "글 쓰러 가기",
   },
   {
-    icon: <Share2 size={26} />,
     title: "나누다",
     desc: "피드에서 서로의 아이디어에 좋아요와 댓글로 응답하세요.",
+    href: "/feed",
+    action: "피드 보러 가기",
   },
   {
-    icon: <Flag size={26} />,
     title: "함께하다",
     desc: "캠페인에 참여하거나 직접 개최해 변화를 넓히세요.",
+    href: "/campaigns",
+    action: "캠페인 보러 가기",
   },
 ];
 
@@ -47,36 +51,38 @@ export function LandingFlow() {
         <ol className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
           {steps.map((step, i) => (
             <li key={step.title} className="list-none">
-              <ScrollReveal
-                delay={i * 0.15}
-                className="relative rounded-3xl border p-8 h-full"
-                style={{
-                  borderColor: "rgba(var(--ink-rgb), 0.12)",
-                  background: "var(--card)",
-                }}
-              >
-                <span
-                  aria-hidden
-                  className="absolute top-6 right-7 text-[12px] tracking-[0.3em]"
-                  style={{ color: "var(--foreground-muted)" }}
+              <ScrollReveal delay={i * 0.15} className="h-full">
+                <Link
+                  href={step.href}
+                  className="group relative flex h-full flex-col rounded-3xl border p-8 transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-lg motion-reduce:transform-none"
+                  style={{
+                    borderColor: "rgba(var(--ink-rgb), 0.12)",
+                    background: "var(--card)",
+                  }}
                 >
-                  0{i + 1}
-                </span>
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
-                  style={{ background: "var(--accent)", color: "var(--surface-dark)" }}
-                >
-                  {step.icon}
-                </div>
-                <h3 className="text-[20px] font-bold" style={{ color: "var(--heading)" }}>
-                  {step.title}
-                </h3>
-                <p
-                  className="mt-3 leading-relaxed"
-                  style={{ color: "var(--foreground-muted)" }}
-                >
-                  {step.desc}
-                </p>
+                  <span
+                    aria-hidden
+                    className="absolute top-6 right-7 text-[12px] tracking-[0.3em]"
+                    style={{ color: "var(--foreground-muted)" }}
+                  >
+                    0{i + 1}
+                  </span>
+                  <h3 className="text-[20px] font-bold group-hover:underline" style={{ color: "var(--heading)" }}>
+                    {step.title}
+                  </h3>
+                  <p
+                    className="mt-3 leading-relaxed"
+                    style={{ color: "var(--foreground-muted)" }}
+                  >
+                    {step.desc}
+                  </p>
+                  <span
+                    className="mt-auto inline-flex items-center gap-1 pt-5 text-[13px] font-medium"
+                    style={{ color: "var(--accent-secondary)" }}
+                  >
+                    {step.action} <ArrowRight size={14} aria-hidden />
+                  </span>
+                </Link>
               </ScrollReveal>
             </li>
           ))}
