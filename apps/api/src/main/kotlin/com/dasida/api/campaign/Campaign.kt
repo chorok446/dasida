@@ -60,6 +60,7 @@ object CampaignSeed {
     private val market = Photos.market
     private val obj = Photos.obj
     private val people = Photos.people
+    private val craft = Photos.craft
 
     // 시드 날짜는 적재 시점 기준 상대 오프셋 — 고정 날짜는 시간이 지나면 전부 모집마감이 되어
     // 랜딩·목록 데모가 죽는다. daysLeftLabel 은 적재 당일 기준 문자열이라 리셋 없이 오래 두면 어긋난다.
@@ -79,10 +80,10 @@ object CampaignSeed {
             Author("김다시", true),
             CampaignBody("캠페인 소개", longBody, listOf(fashion[0], fashion[2]))),
         Campaign("c2", "open", "한강공원 플로깅 데이",
-            "달리면서 줍는 환경 캠페인. 토요일 오전 두 시간.", people[0],
+            "달리면서 줍는 환경 캠페인. 토요일 오전 두 시간.", people[2],
             d(-20), d(5), d(8), d(8), 60, 47, "5일 남음",
             Author("한강러너스", true),
-            CampaignBody("캠페인 소개", longBody, listOf(people[2], people[4]))),
+            CampaignBody("캠페인 소개", longBody, listOf(people[0], people[4]))),
         Campaign("c3", "upcoming", "도시 텃밭 워크숍",
             "재활용 화분으로 시작하는 작은 텃밭 클래스.", nature[1],
             d(3), d(23), d(28), d(59), 30, 0, "3일 후 모집 시작",
@@ -99,19 +100,19 @@ object CampaignSeed {
             Author("김다시", true),
             CampaignBody("캠페인 결과", longBody, listOf(workshop[3], workshop[5]))),
         Campaign("c6", "closed", "커피박 비누 만들기",
-            "버려지는 커피 찌꺼기로 만드는 친환경 비누.", obj[1],
+            "버려지는 커피 찌꺼기로 만드는 친환경 비누.", craft[3],
             d(-112), d(-92), d(-86), d(-71), 25, 25, "모집완료",
             Author("원두모음", false),
-            CampaignBody("캠페인 결과", longBody, listOf(obj[2], obj[4]))),
+            CampaignBody("캠페인 결과", longBody, listOf(craft[4], craft[3]))),
         Campaign("c7", "open", "유리병 캔들 메이킹",
             "다 쓴 유리병에 향을 담아 다시.", obj[0],
             d(-10), d(14), d(19), d(34), 20, 12, "14일 남음",
             Author("보틀앤캔들", true),
             CampaignBody("캠페인 소개", longBody, listOf(obj[3], obj[5]))),
         Campaign("c8", "open", "버려진 가구로 만드는 작은 의자",
-            "친구와 함께하는 목공 업사이클.", workshop[2],
+            "친구와 함께하는 목공 업사이클.", craft[0],
             d(-30), d(8), d(17), d(38), 16, 9, "8일 남음",
             Author("리메이크목공방", false),
-            CampaignBody("캠페인 소개", longBody, listOf(workshop[4], workshop[6]))),
+            CampaignBody("캠페인 소개", longBody, listOf(craft[1], craft[2]))),
     )
 }
