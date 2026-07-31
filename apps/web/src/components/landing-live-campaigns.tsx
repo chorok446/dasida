@@ -106,7 +106,7 @@ export async function LandingLiveCampaigns() {
             >
               지금 모집 중인 캠페인
             </h2>
-            <p className="mt-4 max-w-2xl" style={{ color: "rgba(var(--ink-rgb), 0.68)" }}>
+            <p className="mt-4 max-w-2xl" style={{ color: "var(--foreground-muted)" }}>
               말보다 증거 — 지금 다시,다에서 참여자를 기다리는 실제 캠페인입니다.
             </p>
           </div>

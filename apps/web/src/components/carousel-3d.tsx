@@ -6,15 +6,15 @@ import { motion, useMotionValue, useReducedMotion, animate } from "motion/react"
 import { fashionPhotos, marketPhotos, naturePhotos, peoplePhotos, objectPhotos, workshopPhotos } from "@/data/photos";
 
 const items = [
-  { tag: "FASHION", title: "파리패션위크 런웨이 오른 업사이클링 원피스", img: fashionPhotos[0] },
-  { tag: "RAIL", title: "코레일, 고객과 함께하는 업사이클링 캠페인 개최", img: peoplePhotos[1] },
-  { tag: "FINANCE", title: "우리금융, 플라스틱 업사이클링 화분 키트 기부", img: naturePhotos[2] },
-  { tag: "FOOD", title: "뚜레쥬르, 푸드 업사이클링 ‘착한 빵식 통밀 식빵’ 출시", img: marketPhotos[2] },
-  { tag: "PUBLIC", title: "환경공단, 전직원 기증 청바지 수거 업사이클링 추진", img: fashionPhotos[3] },
-  { tag: "URBAN", title: "성동구, 노숙인 ‘희망 화수분’ 폐화분 업사이클링", img: naturePhotos[5] },
-  { tag: "MUSIC", title: "래코드 x 하이브, BTS 무대의상 업사이클 굿즈", img: fashionPhotos[6] },
-  { tag: "OBJECT", title: "지속가능한 삶을 꿈꾸는 미래산업, 업사이클", img: objectPhotos[0] },
-  { tag: "WORKSHOP", title: "주말마다 열리는 동네 공방 클래스", img: workshopPhotos[1] },
+  { tag: "패션", title: "파리패션위크 런웨이 오른 업사이클링 원피스", img: fashionPhotos[0] },
+  { tag: "철도", title: "코레일, 고객과 함께하는 업사이클링 캠페인 개최", img: peoplePhotos[1] },
+  { tag: "금융", title: "우리금융, 플라스틱 업사이클링 화분 키트 기부", img: naturePhotos[2] },
+  { tag: "푸드", title: "뚜레쥬르, 푸드 업사이클링 ‘착한 빵식 통밀 식빵’ 출시", img: marketPhotos[2] },
+  { tag: "공공", title: "환경공단, 전직원 기증 청바지 수거 업사이클링 추진", img: fashionPhotos[3] },
+  { tag: "도시", title: "성동구, 노숙인 ‘희망 화수분’ 폐화분 업사이클링", img: naturePhotos[5] },
+  { tag: "음악", title: "래코드 x 하이브, BTS 무대의상 업사이클 굿즈", img: fashionPhotos[6] },
+  { tag: "산업", title: "지속가능한 삶을 꿈꾸는 미래산업, 업사이클", img: objectPhotos[0] },
+  { tag: "공방", title: "주말마다 열리는 동네 공방 클래스", img: workshopPhotos[1] },
 ];
 
 export function Carousel3D() {
@@ -58,12 +58,6 @@ export function Carousel3D() {
       }}
     >
       <div className="text-center mb-20 px-8">
-        <p
-          className="tracking-[0.4em] uppercase mb-4"
-          style={{ color: "var(--accent-secondary)" }}
-        >
-          In the News
-        </p>
         <h2
           style={{
             fontFamily: "var(--font-black-han), sans-serif",
@@ -75,9 +69,9 @@ export function Carousel3D() {
         </h2>
         <p
           className="mt-6 max-w-2xl mx-auto"
-          style={{ color: "rgba(var(--ink-rgb), 0.6)" }}
+          style={{ color: "rgba(var(--ink-rgb), 0.75)" }}
         >
-          드래그해서 회전시켜 보세요. 마우스를 올리면 자동 회전이 멈춥니다.
+          언론이 먼저 전한 업사이클링 소식을 모았습니다.
         </p>
       </div>
 
@@ -92,6 +86,8 @@ export function Carousel3D() {
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
           onDrag={onDrag}
+          // 호버가 없는 터치 환경에서도 드래그로 자동 회전을 멈출 수 있게 한다.
+          onDragStart={() => setPaused(true)}
           className="relative w-full h-full cursor-grab active:cursor-grabbing"
           style={{ transformStyle: "preserve-3d", rotateY: rotation, rotateX: -8 }}
         >
@@ -120,26 +116,23 @@ export function Carousel3D() {
                     src={it.img}
                     alt={`${it.title} 캠페인 이미지`}
                     fill
-                    sizes="260px"
+                    sizes="(max-width: 639px) 180px, 260px"
                     className="object-cover"
                     draggable={false}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--surface-dark-rgb),0.9)] via-[rgba(var(--surface-dark-rgb),0.4)] to-transparent" />
                   <div className="absolute inset-0 p-6 flex flex-col justify-between text-white">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[12px] tracking-[0.3em] px-2 py-1 rounded bg-white/20 backdrop-blur">
+                    <div>
+                      {/* 상단은 스크림이 옅어 이미지 위 텍스트 대비가 불안정 — 칩 자체에 어두운 면을 깐다. */}
+                      <span
+                        className="inline-flex text-[12px] px-2.5 py-1 rounded-full backdrop-blur"
+                        style={{ background: "rgba(var(--surface-dark-rgb), 0.6)" }}
+                      >
                         {it.tag}
                       </span>
-                      <span className="text-[12px] opacity-60">0{i + 1}</span>
                     </div>
                     <div>
-                      <h3
-                        style={{
-                          fontFamily: "var(--font-black-han), sans-serif",
-                          fontSize: small ? 14 : 20,
-                          lineHeight: 1.3,
-                        }}
-                      >
+                      <h3 className="font-bold" style={{ fontSize: small ? 14 : 18, lineHeight: 1.35 }}>
                         {it.title}
                       </h3>
                     </div>

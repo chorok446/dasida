@@ -43,14 +43,11 @@ export function Hero3D() {
         backgroundImage: "var(--hero-gradient)",
       }}
     >
-      <motion.div className="absolute inset-0 opacity-40" style={{ y: blobY }}>
+      {/* 배경 오브 — DESIGN.md 규격: 500px·opacity 20%·페이지당 하나 */}
+      <motion.div className="absolute inset-0 opacity-20" style={{ y: blobY }}>
         <div
-          className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full blur-[120px]"
+          className="absolute -top-24 -left-24 w-[500px] h-[500px] rounded-full blur-[120px]"
           style={{ background: "var(--accent)" }}
-        />
-        <div
-          className="absolute -bottom-40 -right-20 w-[700px] h-[700px] rounded-full blur-[140px]"
-          style={{ background: "var(--accent-secondary)", opacity: 0.4 }}
         />
       </motion.div>
 
@@ -89,33 +86,32 @@ export function Hero3D() {
 
         <motion.h1
           style={{ transform: "translateZ(90px)" }}
-          className="text-center px-10 py-12 select-none"
+          className="text-center px-10 py-12"
         >
           <span
             className="block"
             style={{
               fontFamily: "var(--font-black-han), sans-serif",
-              fontSize: "clamp(48px, 7vw, 110px)",
-              lineHeight: 1.05,
+              fontSize: "clamp(48px, 7vw, 96px)",
+              lineHeight: 1.1,
               color: "var(--foreground)",
-              textShadow: "0 20px 60px rgba(0,0,0,0.35)",
             }}
           >
-            당 신 은 지 구 를 위해
+            다시 쓰는 일을
           </span>
           <span
             className="block mt-3"
             style={{
               fontFamily: "var(--font-black-han), sans-serif",
-              fontSize: "clamp(48px, 7vw, 110px)",
-              lineHeight: 1.05,
+              fontSize: "clamp(48px, 7vw, 96px)",
+              lineHeight: 1.1,
               backgroundImage: "var(--hero-title-gradient)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
             }}
           >
-            어떤 노력을 하고 있나요?
+            함께 하는 곳
           </span>
         </motion.h1>
 
@@ -164,9 +160,9 @@ export function Hero3D() {
       <motion.div
         animate={reduce ? undefined : { y: hover ? 6 : 0, opacity: hover ? 0.4 : 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 tracking-[0.4em] uppercase"
-        style={{ color: "rgba(var(--ink-rgb), 0.65)" }}
+        style={{ color: "var(--foreground-muted)" }}
       >
-        scroll ↓
+        스크롤 ↓
       </motion.div>
     </section>
   );

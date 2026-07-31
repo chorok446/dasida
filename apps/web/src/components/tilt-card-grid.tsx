@@ -48,7 +48,7 @@ function TiltCard({ card }: { card: Card }) {
           transformStyle: "preserve-3d",
           background: "linear-gradient(135deg, var(--surface-deep), var(--surface-dark))",
         }}
-        className="relative h-[280px] rounded-3xl p-7 text-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] overflow-hidden"
+        className="relative h-[280px] rounded-3xl p-7 text-white overflow-hidden transition-shadow hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)]"
       >
         <motion.div
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -59,7 +59,7 @@ function TiltCard({ card }: { card: Card }) {
             {card.icon}
           </div>
           <div>
-            <h3 style={{ fontFamily: "var(--font-black-han), sans-serif", fontSize: 28 }}>{card.title}</h3>
+            <h3 className="text-[20px] font-bold">{card.title}</h3>
             <p className="mt-2 text-white/80">{card.desc}</p>
           </div>
         </div>
@@ -92,15 +92,12 @@ export function TiltCardGrid() {
     >
       <div className="max-w-6xl mx-auto">
         <motion.div className="mb-16 text-center" style={{ y: headerY }}>
-          <p className="tracking-[0.4em] uppercase mb-4" style={{ color: "var(--accent-secondary)" }}>
-            Upcycling Stories
-          </p>
           <h2
             style={{ fontFamily: "var(--font-black-han), sans-serif", fontSize: "clamp(40px, 5vw, 72px)", color: "var(--heading)" }}
           >
             다시, 다 — 새 가치를 더하다
           </h2>
-          <p className="mt-6 max-w-2xl mx-auto" style={{ color: "rgba(var(--ink-rgb), 0.68)" }}>
+          <p className="mt-6 max-w-2xl mx-auto" style={{ color: "var(--foreground-muted)" }}>
             관심 있는 주제를 골라 관련 이야기와 캠페인을 찾아보세요.
           </p>
         </motion.div>
