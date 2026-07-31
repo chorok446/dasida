@@ -88,6 +88,16 @@ function CampaignCard({ campaign, featured = false }: { campaign: Campaign; feat
   );
 }
 
+// 옛 틸트 카드 6장의 목적지(검색 쿼리)를 정직한 형태로 — 칩 행이 곧 검색 지름길이다.
+const TOPICS = [
+  { label: "재활용", href: "/search?q=재활용" },
+  { label: "패션", href: "/search?q=패션" },
+  { label: "푸드", href: "/search?q=푸드" },
+  { label: "화분", href: "/search?q=화분" },
+  { label: "패키지", href: "/search?q=패키지" },
+  { label: "워크숍", href: "/search?q=워크숍" },
+];
+
 export async function LandingLiveCampaigns() {
   const campaigns = await fetchLiveCampaigns();
   const [featured, ...rest] = campaigns;
@@ -132,7 +142,29 @@ export async function LandingLiveCampaigns() {
               ))}
             </div>
           </div>
-        ) : (
+        ) : null}
+
+        <ScrollReveal className="mt-12 flex flex-wrap items-center justify-center gap-2.5">
+          <span className="mr-1 text-[13px] font-medium" style={{ color: "var(--foreground-muted)" }}>
+            주제로 찾아보기
+          </span>
+          {TOPICS.map((topic) => (
+            <Link
+              key={topic.label}
+              href={topic.href}
+              className="rounded-full border px-3 py-1.5 text-[12px] transition-colors hover:bg-[color:var(--chip-bg)]"
+              style={{
+                background: "var(--glass-strong)",
+                borderColor: "rgba(var(--ink-rgb), 0.12)",
+                color: "var(--heading)",
+              }}
+            >
+              {topic.label}
+            </Link>
+          ))}
+        </ScrollReveal>
+
+        {!featured && (
           <ScrollReveal>
             <div
               className="rounded-3xl border p-10 text-center"
