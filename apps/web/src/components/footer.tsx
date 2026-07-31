@@ -4,7 +4,8 @@
 export function Footer() {
   return (
     <footer
-      className="py-10 px-8 transition-colors"
+      // 우하단 고정 테마 토글이 카피를 가리지 않도록 하단·우측 여유를 둔다.
+      className="py-10 px-8 pb-24 transition-colors md:pb-10 md:pr-28"
       style={{ background: "var(--surface-deep)", color: "rgba(255,255,255,0.75)" }}
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">

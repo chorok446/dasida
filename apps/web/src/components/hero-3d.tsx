@@ -117,7 +117,8 @@ export function Hero3D() {
 
         <motion.div
           style={{ transform: "translateZ(140px)" }}
-          className="hidden sm:flex absolute -right-10 -top-8 w-28 h-28 rounded-2xl bg-[var(--accent)] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] items-center justify-center"
+          // ~1200px 뷰포트에서 헤드라인과 충돌 — 여유가 생기는 xl 이상에서만 띄운다.
+          className="hidden xl:flex absolute -right-10 -top-8 w-28 h-28 rounded-2xl bg-[var(--accent)] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] items-center justify-center"
         >
           <span style={{ fontFamily: "var(--font-black-han), sans-serif", fontSize: 28, color: "var(--surface-dark)" }}>
             다시,<br />다
@@ -159,7 +160,8 @@ export function Hero3D() {
 
       <motion.div
         animate={reduce ? undefined : { y: hover ? 6 : 0, opacity: hover ? 0.4 : 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 tracking-[0.4em] uppercase"
+        // 모바일은 하단 고정 내비에 가리지 않도록 더 위에 둔다.
+        className="absolute bottom-24 sm:bottom-10 left-1/2 -translate-x-1/2 tracking-[0.4em] uppercase"
         style={{ color: "var(--foreground-muted)" }}
       >
         스크롤 ↓
