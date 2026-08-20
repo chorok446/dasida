@@ -48,7 +48,7 @@ jobs:
           # CI 를 통과한 바로 그 커밋을 빌드한다(트리거 시점의 main HEAD 와의 race 방지).
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
         with:
